@@ -19,6 +19,10 @@ def Init_model():
         return model,data
     
 
+def Get_labels():
+    with open('labels.txt','r'):
+        
+
 def Det_cam(model,data):
     vid = cv2.VideoCapture(0)
 
