@@ -19,8 +19,18 @@ def Init_model():
         return model,data
     
 
-def Det_cam(model,data):
+def Get_labels():
+    labels=list()
+    with open('labels.txt','r') as file:
+        data=file.readlines()
+        for line in data:
+            labels.append(line[2:].rstrip())
+    return labels
+        
+
+def Det_cam(model,data,labels):
     vid = cv2.VideoCapture(0)
+    count=0
 
     while(True):
         ret,image=vid.read()
@@ -39,22 +49,20 @@ def Det_cam(model,data):
         prediction = model.predict(data)
         # print(prediction)
 
-        for i in prediction:
-            if i[0]>0.7:
-                text="person"
-            if i[1]>0.7:
-                text="car"
-            if i[2]>0.7:
-                text="plane"    
-            image=cv2.resize(image,(500,500))
-            cv2.putText(image,text,(10,30),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,255),2,cv2.LINE_8)
-        cv2.imshow("test",image)
+        val=prediction[0]
+        index=(np.where(val==np.amax(val)))[0][0]
+        print(labels[index])
+               
+        # image=cv2.resize(image,(500,500))
+        # cv2.putText(image,text,(10,30),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,255),2,cv2.LINE_8)
+        # cv2.imshow("test",image)
 
 
 
 def main():
+    labels=Get_labels()
     model,data=Init_model()
-    Det_cam(model,data)
+    Det_cam(model,data,labels)
 if __name__ == '__main__':
     main()
     
