@@ -10,7 +10,7 @@ def Init_model():
     np.set_printoptions(suppress=True)
     # Load the model
     try:
-        model = keras.models.load_model('keras_model.h5')
+        model = keras.models.load_model('Office_model/keras_model.h5')
         data = np.ndarray(shape=(10, 224, 224, 3), dtype=np.float32)
     except:
         print("Model could not be loaded exiting program....")
@@ -21,7 +21,7 @@ def Init_model():
 
 def Get_labels():
     labels=list()
-    with open('labels.txt','r') as file:
+    with open('Office_model/labels.txt','r') as file:
         data=file.readlines()
         for line in data:
             labels.append(line[2:].rstrip())
@@ -39,7 +39,7 @@ def Det_cam(model,data,labels):
         
         key=cv2.waitKey(1)
         if key%256==27:
-            print("Escaped")
+            print("User closed program")
             break
         image=cv2.resize(image,(224,224))
         image_array = np.asarray(image)
@@ -51,11 +51,11 @@ def Det_cam(model,data,labels):
 
         val=prediction[0]
         index=(np.where(val==np.amax(val)))[0][0]
-        print(labels[index])
+        text=labels[index]
                
-        # image=cv2.resize(image,(500,500))
-        # cv2.putText(image,text,(10,30),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,255),2,cv2.LINE_8)
-        # cv2.imshow("test",image)
+        image=cv2.resize(image,(500,500))
+        cv2.putText(image,text,(10,30),cv2.FONT_HERSHEY_COMPLEX,1,(0,255,255),2,cv2.LINE_8)
+        cv2.imshow("test",image)
 
 
 
