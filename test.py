@@ -20,6 +20,7 @@ def Init_model():
     
 
 def Get_labels():
+
     labels=list()
     with open('Office_model/labels.txt','r') as file:
         data=file.readlines()
@@ -29,6 +30,12 @@ def Get_labels():
         
 
 def Det_cam(model,data,labels):
+
+    with open('labels.txt','r'):
+        
+
+def Det_cam(model,data):
+
     vid = cv2.VideoCapture(0)
     count=0
 
