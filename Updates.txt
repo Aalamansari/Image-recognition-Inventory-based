@@ -1,5 +1,0 @@
--The test.py file has been updated to work without the need for "for loop"
-
--New model has been created based on office objects stored in sperate folder called Office_model
-
--All the objects of the model has been defined in labels.txt
